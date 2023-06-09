@@ -20,20 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		} else {
 			echo "<script>alert('Error al crear el evento');</script>";
 		}
-	} elseif (isset($_POST["buscar"])) {
-		$query = "SELECT * FROM evento WHERE eve_nombre = :nombre";
-		$stmt = $db_connection->prepare($query);
-		$stmt->bindParam(":nombre", $nombre);
-
-		if ($stmt->execute()) {
-			if ($stmt->rowCount() > 0) {
-				echo "<script>alert('Evento encontrado');</script>";
-			} else {
-				echo "<script>alert('No existe el evento');</script>";
-			}
-		} else {
-			echo "<script>alert('Error al buscar el evento');</script>";
-		}
 	} elseif (isset($_POST["actualizar"])) {
 		$fecha = $_POST["fecha"];
 		$ubicacion = $_POST["ubicacion"];
@@ -135,9 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<div class="row justify-content-center py-2">
 					<div class="col-2">
 						<button type="submit" name="crear" class="btn btn-info">Crear</button>
-					</div>
-					<div class="col-2">
-						<button type="submit" name="buscar" class="btn btn-info">Buscar</button>
 					</div>
 					<div class="col-2">
 						<button type="submit" name="actualizar" class="btn btn-info">Actualizar</button>
