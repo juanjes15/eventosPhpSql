@@ -1,3 +1,54 @@
+<?php
+include 'database.php';
+$database = new Database();
+$db_connection = $database->getConnection();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$nombre = $_POST["nombre"];
+	if (isset($_POST["crear"])) {
+		$direccion = $_POST["direccion"];
+
+		$query = "INSERT INTO ubicacion (ubi_nombre, ubi_direccion) VALUES (:nombre, :direccion)";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+		$stmt->bindParam(":direccion", $direccion);
+
+		if ($stmt->execute()) {
+			echo "<script>alert('Ubicación creada exitosamente');</script>";
+		} else {
+			echo "<script>alert('Error al crear la ubicación');</script>";
+		}
+	} elseif (isset($_POST["actualizar"])) {
+		$direccion = $_POST["direccion"];
+
+		$query = "UPDATE ubicacion SET ubi_nombre = :nombre, ubi_direccion = :direccion WHERE ubi_nombre = :nombre";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+		$stmt->bindParam(":direccion", $direccion);
+
+		if ($stmt->execute()) {
+			echo "<script>alert('Ubicación actualizada exitosamente');</script>";
+		} else {
+			echo "<script>alert('Error al actualizar la ubicación');</script>";
+		}
+	} elseif (isset($_POST["eliminar"])) {
+		$query = "DELETE FROM ubicacion WHERE ubi_nombre = :nombre";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+
+		if ($stmt->execute()) {
+			if ($stmt->rowCount() > 0) {
+				echo "<script>alert('Ubicación eliminada exitosamente');</script>";
+			} else {
+				echo "<script>alert('No existe la ubicación');</script>";
+			}
+		} else {
+			echo "<script>alert('Error al eliminar la ubicación');</script>";
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,29 +83,26 @@
 						<label for="nombre" class="col-form-label">Nombre:</label>
 					</div>
 					<div class="col-4">
-						<input type="text" id="nombre" class="form-control">
+						<input type="text" id="nombre" name="nombre" class="form-control">
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
 					<div class="col-1">
-						<label for="fecha" class="col-form-label">Dirección:</label>
+						<label for="direccion" class="col-form-label">Dirección:</label>
 					</div>
 					<div class="col-4">
-						<input type="text" id="fecha" class="form-control">
+						<input type="text" id="direccion" name="direccion" class="form-control">
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Crear</button>
+						<button type="submit" name="crear" class="btn btn-info">Crear</button>
 					</div>
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Buscar</button>
+						<button type="submit" name="actualizar" class="btn btn-info">Actualizar</button>
 					</div>
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Actualizar</button>
-					</div>
-					<div class="col-2">
-						<button type="submit" class="btn btn-info">Eliminar</button>
+						<button type="submit" name="eliminar" class="btn btn-info">Eliminar</button>
 					</div>
 				</div>
 			</form>
@@ -69,14 +117,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Mark</td>
-							<td>Otto</td>
-						</tr>
-						<tr>
-							<td>Jacob</td>
-							<td>Thornton</td>
-						</tr>
+						<?php
+						$query = "SELECT ubicacion.ubi_nombre, ubicacion.ubi_direccion
+                                  FROM ubicacion";
+						$stmt = $db_connection->prepare($query);
+						$stmt->execute();
+						$ubicaciones = $stmt->fetchAll();
+
+						foreach ($ubicaciones as $ubicacion) { ?>
+							<tr>
+								<td><?php echo $ubicacion['ubi_nombre']; ?></td>
+								<td><?php echo $ubicacion['ubi_direccion']; ?></td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>

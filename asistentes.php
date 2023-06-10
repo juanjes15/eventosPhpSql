@@ -1,3 +1,58 @@
+<?php
+include 'database.php';
+$database = new Database();
+$db_connection = $database->getConnection();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$nombre = $_POST["nombre"];
+	if (isset($_POST["crear"])) {
+		$apellido = $_POST["apellido"];
+		$correo = $_POST["correo"];
+
+		$query = "INSERT INTO asistente (ase_nombre, ase_apellido, ase_correo) VALUES (:nombre, :apellido, :correo)";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+		$stmt->bindParam(":apellido", $apellido);
+		$stmt->bindParam(":correo", $correo);
+
+		if ($stmt->execute()) {
+			echo "<script>alert('Asistente creado exitosamente');</script>";
+		} else {
+			echo "<script>alert('Error al crear el asistente');</script>";
+		}
+	} elseif (isset($_POST["actualizar"])) {
+		$apellido = $_POST["apellido"];
+		$correo = $_POST["correo"];
+
+		$query = "UPDATE asistente SET ase_nombre = :nombre, ase_apellido = :apellido, ase_correo = :correo WHERE ase_nombre = :nombre";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+		$stmt->bindParam(":apellido", $apellido);
+		$stmt->bindParam(":correo", $correo);
+
+		if ($stmt->execute()) {
+			echo "<script>alert('Asistente actualizado exitosamente');</script>";
+		} else {
+			echo "<script>alert('Error al actualizar el asistente');</script>";
+		}
+	} elseif (isset($_POST["eliminar"])) {
+		$query = "DELETE FROM asistente WHERE ase_nombre = :nombre";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":nombre", $nombre);
+
+		if ($stmt->execute()) {
+			if ($stmt->rowCount() > 0) {
+				echo "<script>alert('Asistente eliminado exitosamente');</script>";
+			} else {
+				echo "<script>alert('No existe el asistente');</script>";
+			}
+		} else {
+			echo "<script>alert('Error al eliminar el asistente');</script>";
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +87,7 @@
 						<label for="nombre" class="col-form-label">Nombre:</label>
 					</div>
 					<div class="col-4">
-						<input type="text" id="nombre" class="form-control">
+						<input type="text" id="nombre" name="nombre" class="form-control">
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
@@ -40,7 +95,7 @@
 						<label for="apellido" class="col-form-label">Apellido:</label>
 					</div>
 					<div class="col-4">
-						<input type="text" id="apellido" class="form-control">
+						<input type="text" id="apellido" name="apellido" class="form-control">
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
@@ -48,21 +103,18 @@
 						<label for="correo" class="col-form-label">Correo:</label>
 					</div>
 					<div class="col-4">
-						<input type="email" id="correo" class="form-control">
+						<input type="email" id="correo" name="correo" class="form-control">
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Crear</button>
+						<button type="submit" name="crear" class="btn btn-info">Crear</button>
 					</div>
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Buscar</button>
+						<button type="submit" name="actualizar" class="btn btn-info">Actualizar</button>
 					</div>
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Actualizar</button>
-					</div>
-					<div class="col-2">
-						<button type="submit" class="btn btn-info">Eliminar</button>
+						<button type="submit" name="eliminar" class="btn btn-info">Eliminar</button>
 					</div>
 				</div>
 			</form>
@@ -78,16 +130,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>Manizales</td>
-						</tr>
-						<tr>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>Pereira</td>
-						</tr>
+						<?php
+						$query = "SELECT asistente.ase_nombre, asistente.ase_apellido, asistente.ase_correo
+                                  FROM asistente";
+						$stmt = $db_connection->prepare($query);
+						$stmt->execute();
+						$asistentes = $stmt->fetchAll();
+
+						foreach ($asistentes as $asistente) { ?>
+							<tr>
+								<td><?php echo $asistente['ase_nombre']; ?></td>
+								<td><?php echo $asistente['ase_apellido']; ?></td>
+								<td><?php echo $asistente['ase_correo']; ?></td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>

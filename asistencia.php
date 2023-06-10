@@ -1,3 +1,44 @@
+<?php
+include 'database.php';
+$database = new Database();
+$db_connection = $database->getConnection();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	if (isset($_POST["asistir"])) {
+		$asistente = $_POST["asistente"];
+		$evento = $_POST["evento"];
+
+		$query = "INSERT INTO asistencia (ase_id, eve_id) VALUES (:asistente, :evento)";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":asistente", $asistente);
+		$stmt->bindParam(":evento", $evento);
+
+		if ($stmt->execute()) {
+			echo "<script>alert('Asistencia creada exitosamente');</script>";
+		} else {
+			echo "<script>alert('Error al crear la asistencia');</script>";
+		}
+	} elseif (isset($_POST["eliminar"])) {
+		$asistente = $_POST["asistente"];
+		$evento = $_POST["evento"];
+		$query = "DELETE FROM asistencia WHERE ase_id = :asistente and eve_id = :evento";
+		$stmt = $db_connection->prepare($query);
+		$stmt->bindParam(":asistente", $asistente);
+		$stmt->bindParam(":evento", $evento);
+
+		if ($stmt->execute()) {
+			if ($stmt->rowCount() > 0) {
+				echo "<script>alert('Asistencia eliminada exitosamente');</script>";
+			} else {
+				echo "<script>alert('No existe la asistencia');</script>";
+			}
+		} else {
+			echo "<script>alert('Error al eliminar la asistencia');</script>";
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,39 +70,46 @@
 			<form method="post">
 				<div class="row justify-content-center py-2">
 					<div class="col-1">
-						<label for="asistentes" class="col-form-label">Asistentes:</label>
+						<label for="asistente" class="col-form-label">Asistente:</label>
 					</div>
 					<div class="col-4">
-						<select class="form-select" id="asistentes">
-							<option selected>Asistentes</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
+						<select class="form-select" id="asistente" name="asistente">
+							<option selected>Seleccione un asistente</option>
+							<?php
+							$query = "SELECT ase_id, ase_nombre FROM asistente";
+							$stmt = $db_connection->prepare($query);
+							$stmt->execute();
+							$asistentes = $stmt->fetchAll();
+							foreach ($asistentes as $asistente) { ?>
+								<option value="<?php echo $asistente['ase_id']; ?>"><?php echo $asistente['ase_nombre']; ?></option>
+							<?php } ?>
 						</select>
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
 					<div class="col-1">
-						<label for="eventos" class="col-form-label">Eventos:</label>
+						<label for="evento" class="col-form-label">Evento:</label>
 					</div>
 					<div class="col-4">
-						<select class="form-select" id="eventos">
-							<option selected>Eventos</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
+						<select class="form-select" id="evento" name="evento">
+							<option selected>Seleccione un evento</option>
+							<?php
+							$query = "SELECT eve_id, eve_nombre FROM evento";
+							$stmt = $db_connection->prepare($query);
+							$stmt->execute();
+							$eventos = $stmt->fetchAll();
+							foreach ($eventos as $evento) { ?>
+								<option value="<?php echo $evento['eve_id']; ?>"><?php echo $evento['eve_nombre']; ?></option>
+							<?php } ?>
 						</select>
 					</div>
 				</div>
 				<div class="row justify-content-center py-2">
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Asistir</button>
+						<button type="submit" name="asistir" class="btn btn-info">Asistir</button>
 					</div>
 					<div class="col-2">
-						<button type="submit" class="btn btn-info">Buscar</button>
-					</div>
-					<div class="col-2">
-						<button type="submit" class="btn btn-info">Eliminar</button>
+						<button type="submit" name="eliminar" class="btn btn-info">Eliminar</button>
 					</div>
 				</div>
 			</form>
@@ -76,14 +124,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Mark</td>
-							<td>Otto</td>
-						</tr>
-						<tr>
-							<td>Jacob</td>
-							<td>Thornton</td>
-						</tr>
+						<?php
+						$query = "SELECT asistente.ase_nombre, evento.eve_nombre 
+						FROM asistencia
+						INNER JOIN evento ON evento.eve_id = asistencia.eve_id 
+						INNER JOIN	asistente ON asistente.ase_id = asistencia.ase_id
+						ORDER BY asistencia.asa_id ASC";
+						$stmt = $db_connection->prepare($query);
+						$stmt->execute();
+						$asistencias = $stmt->fetchAll();
+
+						foreach ($asistencias as $asistencia) { ?>
+							<tr>
+								<td><?php echo $asistencia['ase_nombre']; ?></td>
+								<td><?php echo $asistencia['eve_nombre']; ?></td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
