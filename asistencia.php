@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						$query = "SELECT asistente.ase_nombre, evento.eve_nombre 
 						FROM asistencia
 						INNER JOIN evento ON evento.eve_id = asistencia.eve_id 
-						INNER JOIN	asistente ON asistente.ase_id = asistencia.ase_id
+						INNER JOIN asistente ON asistente.ase_id = asistencia.ase_id
 						ORDER BY asistencia.asa_id ASC";
 						$stmt = $db_connection->prepare($query);
 						$stmt->execute();
