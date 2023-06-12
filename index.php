@@ -16,7 +16,6 @@
 			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
 			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
 			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
-			<a class="navbar-brand" href="asistencias.php"><strong>Asistencias</strong></a>
 		</div>
 	</nav><br>
 	<div class="container text-center p-4 rounded-5" style="background-color: #BFD4E4;">

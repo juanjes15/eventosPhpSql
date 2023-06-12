@@ -27,7 +27,6 @@ $ubicaciones = $ubicacion->obtenerUbicaciones();
 			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
 			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
 			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
-			<a class="navbar-brand" href="asistencias.php"><strong>Asistencias</strong></a>
 		</div>
 	</nav><br>
 	<div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
@@ -51,14 +50,14 @@ $ubicaciones = $ubicacion->obtenerUbicaciones();
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($ubicaciones as $ubicacion) { ?>
+						<?php foreach ($ubicaciones as $ubi) { ?>
 							<tr>
-								<td class="text-start"><?php echo $ubicacion['ubi_nombre']; ?></td>
-								<td class="text-start"><?php echo $ubicacion['ubi_direccion']; ?></td>
+								<td class="text-start"><?php echo $ubi['ubi_nombre']; ?></td>
+								<td class="text-start"><?php echo $ubi['ubi_direccion']; ?></td>
 								<td class="text-end">
 									<div class="d-flex justify-content-end">
-										<a href="ubicacionA.php?id=<?php echo $ubicacion['ubi_id']; ?>" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
-										<a href="ubicaciones.php?id=<?php echo $ubicacion['ubi_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ubicacion['ubi_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
+										<a title="Editar" href="ubicacionA.php?id=<?php echo $ubi['ubi_id']; ?>" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
+										<a title="Eliminar" href="ubicaciones.php?id=<?php echo $ubi['ubi_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ubi['ubi_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
 									</div>
 								</td>
 							</tr>

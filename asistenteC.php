@@ -1,10 +1,11 @@
 <?php
-include 'ubicacion.php';
-$ubicacion = new Ubicacion();
+include 'asistente.php';
+$asistente = new Asistente();
 if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
     $nombre = $_POST["nombre"];
-    $direccion = $_POST["direccion"];
-    $ubicacion->crearUbicacion($nombre, $direccion);
+    $apellido = $_POST["apellido"];
+    $correo = $_POST["correo"];
+    $asistente->crearAsistente($nombre, $apellido, $correo);
 }
 ?>
 
@@ -31,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
     <div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
         <div class="row py-3">
             <div class="col">
-                <h1 class="h1">Crear Ubicación</h1>
+                <h1 class="h1">Crear Asistente</h1>
             </div>
         </div>
         <div class="row py-3">
@@ -46,10 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
                 </div>
                 <div class="row justify-content-center py-2">
                     <div class="col-1">
-                        <label for="direccion" class="col-form-label">Dirección:</label>
+                        <label for="apellido" class="col-form-label">Apellido:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="direccion" name="direccion" class="form-control">
+                        <input type="text" id="apellido" name="apellido" class="form-control">
+                    </div>
+                </div>
+                <div class="row justify-content-center py-2">
+                    <div class="col-1">
+                        <label for="correo" class="col-form-label">Correo:</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" id="correo" name="correo" class="form-control">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
