@@ -57,13 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
 			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
 			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
-			<a class="navbar-brand" href="asistencia.php"><strong>Asistencia</strong></a>
+			<a class="navbar-brand" href="asistencias.php"><strong>Asistencias</strong></a>
 		</div>
 	</nav><br>
 	<div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
 		<div class="row py-3">
 			<div class="col">
-				<h1 class="h1">Asistencia</h1>
+				<h1 class="h1">Asistencias</h1>
 			</div>
 		</div>
 		<div class="row py-3">
