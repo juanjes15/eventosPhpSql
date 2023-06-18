@@ -14,7 +14,7 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
 			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
+			<a class="navbar-brand" href="view/ubiIndex.php"><strong>Ubicaciones</strong></a>
 			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
 		</div>
 	</nav><br>

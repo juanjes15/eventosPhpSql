@@ -1,13 +1,3 @@
-<?php
-include 'ubicacion.php';
-$ubicacion = new Ubicacion();
-
-if (isset($_GET["id"])) {
-	$ubicacion->eliminarUbicacion($_GET["id"]);
-}
-$ubicaciones = $ubicacion->obtenerUbicaciones();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +15,7 @@ $ubicaciones = $ubicacion->obtenerUbicaciones();
 		<div class="container-fluid">
 			<a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
 			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
+			<a class="navbar-brand" href="ubiIndex.php"><strong>Ubicaciones</strong></a>
 			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
 		</div>
 	</nav><br>
@@ -37,7 +27,7 @@ $ubicaciones = $ubicacion->obtenerUbicaciones();
 		</div>
 		<div class="row py-2">
 			<div class="col-4">
-				<a href="ubicacionC.php" class="btn btn-success">Nueva ubicación</a>
+				<a href="ubiIndex.php?action=createUbicacion" class="btn btn-success">Nueva ubicación</a>
 			</div>
 		</div>
 		<div class="row justify-content-center py-3">
@@ -56,8 +46,8 @@ $ubicaciones = $ubicacion->obtenerUbicaciones();
 								<td class="text-start"><?php echo $ubi['ubi_direccion']; ?></td>
 								<td class="text-end">
 									<div class="d-flex justify-content-end">
-										<a title="Editar" href="ubicacionA.php?id=<?php echo $ubi['ubi_id']; ?>" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
-										<a title="Eliminar" href="ubicaciones.php?id=<?php echo $ubi['ubi_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ubi['ubi_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
+										<a title="Editar" href="ubiIndex.php?id=<?php echo $ubi['ubi_id']; ?>&action=updateUbicacion" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
+										<a title="Eliminar" href="ubiIndex.php?id=<?php echo $ubi['ubi_id']; ?>&action=deleteUbicacion" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ubi['ubi_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
 									</div>
 								</td>
 							</tr>

@@ -1,13 +1,3 @@
-<?php
-include 'ubicacion.php';
-$ubicacion = new Ubicacion();
-if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
-    $nombre = $_POST["nombre"];
-    $direccion = $_POST["direccion"];
-    $ubicacion->crearUbicacion($nombre, $direccion);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,24 +14,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
             <a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-            <a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
+            <a class="navbar-brand" href="ubiIndex.php"><strong>Ubicaciones</strong></a>
             <a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
         </div>
     </nav><br>
     <div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
         <div class="row py-3">
             <div class="col">
-                <h1 class="h1">Crear Ubicación</h1>
+                <h1 class="h1">Actualizar Ubicación</h1>
             </div>
         </div>
         <div class="row py-3">
-            <form method="post">
+            <form method="POST" action="ubiIndex.php?id=<?php echo $ubi['ubi_id'] ?>&action=updateUbicacion">
                 <div class="row justify-content-center py-2">
                     <div class="col-1">
                         <label for="nombre" class="col-form-label">Nombre:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="nombre" name="nombre" class="form-control">
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $ubi['ubi_nombre']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
@@ -49,12 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
                         <label for="direccion" class="col-form-label">Dirección:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="direccion" name="direccion" class="form-control">
+                        <input type="text" id="direccion" name="direccion" class="form-control" value="<?php echo $ubi['ubi_direccion']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
                     <div class="col-2">
-                        <button type="submit" name="crear" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
                 </div>
             </form>
