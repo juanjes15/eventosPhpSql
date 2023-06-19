@@ -1,15 +1,3 @@
-<?php
-include 'evento.php';
-$evento = new Evento();
-$ubicaciones = $evento->obtenerUbicaciones();
-if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
-    $nombre = $_POST["nombre"];
-    $fecha = $_POST["fecha"];
-    $ubicacion = $_POST["ubicacion"];
-    $evento->crearEvento($nombre, $fecha, $ubicacion);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,26 +12,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
 <body>
     <nav class="navbar navbar-expand-lg" style="background-color: #0998ff8a;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
-            <a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-            <a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
-            <a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
+            <a class="navbar-brand" href="../index.php"><strong>Inicio</strong></a>
+            <a class="navbar-brand" href="eveIndex.php"><strong>Eventos</strong></a>
+            <a class="navbar-brand" href="ubiIndex.php"><strong>Ubicaciones</strong></a>
+            <a class="navbar-brand" href="aseIndex.php"><strong>Asistentes</strong></a>
         </div>
     </nav><br>
     <div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
         <div class="row py-3">
             <div class="col">
-                <h1 class="h1">Crear Evento</h1>
+                <h1 class="h1">Actualizar Evento</h1>
             </div>
         </div>
         <div class="row py-3">
-            <form method="post">
+            <form method="POST" action="eveIndex.php?id=<?php echo $eve['eve_id'] ?>&action=updateEvento">
                 <div class="row justify-content-center py-2">
                     <div class="col-1">
                         <label for="nombre" class="col-form-label">Nombre:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="nombre" name="nombre" class="form-control">
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $eve['eve_nombre']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
@@ -51,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
                         <label for="fecha" class="col-form-label">Fecha:</label>
                     </div>
                     <div class="col-4">
-                        <input type="date" id="fecha" name="fecha" class="form-control">
+                        <input type="date" id="fecha" name="fecha" class="form-control" value="<?php echo $eve['eve_fecha']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
@@ -60,17 +48,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["crear"])) {
                     </div>
                     <div class="col-4">
                         <select class="form-select" id="ubicacion" name="ubicacion">
-                            <option selected>Seleccione una ubicación</option>
                             <?php
                             foreach ($ubicaciones as $ubicacion) { ?>
-                                <option value="<?php echo $ubicacion['ubi_id']; ?>"><?php echo $ubicacion['ubi_nombre']; ?></option>
+                                <option <?php if ($eve['ubi_id'] == $ubicacion['ubi_id']) {
+                                            echo 'selected';
+                                        } ?> value="<?php echo $ubicacion['ubi_id']; ?>"><?php echo $ubicacion['ubi_nombre']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
                     <div class="col-2">
-                        <button type="submit" name="crear" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
                 </div>
             </form>

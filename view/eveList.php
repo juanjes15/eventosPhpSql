@@ -1,14 +1,3 @@
-<?php
-include 'evento.php';
-$evento = new Evento();
-
-if (isset($_GET["id"])) {
-	$evento->eliminarEvento($_GET["id"]);
-}
-$eventos = $evento->obtenerEventos();
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +13,10 @@ $eventos = $evento->obtenerEventos();
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #0998ff8a;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
-			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
-			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
+			<a class="navbar-brand" href="../index.php"><strong>Inicio</strong></a>
+			<a class="navbar-brand" href="eveIndex.php"><strong>Eventos</strong></a>
+			<a class="navbar-brand" href="ubiIndex.php"><strong>Ubicaciones</strong></a>
+			<a class="navbar-brand" href="aseIndex.php"><strong>Asistentes</strong></a>
 		</div>
 	</nav><br>
 	<div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
@@ -38,7 +27,7 @@ $eventos = $evento->obtenerEventos();
 		</div>
 		<div class="row py-2">
 			<div class="col-4">
-				<a href="eventoC.php" class="btn btn-success">Nuevo evento</a>
+				<a href="eveIndex.php?action=createEvento" class="btn btn-success">Nuevo evento</a>
 			</div>
 		</div>
 
@@ -60,9 +49,9 @@ $eventos = $evento->obtenerEventos();
 								<td class="text-start"><?php echo $eve['ubi_nombre']; ?></td>
 								<td class="text-end">
 									<div class="d-flex justify-content-end">
-										<a title="Gestionar asistencias" href="eventoP.php?id=<?php echo $eve['eve_id']; ?>" class="btn btn-primary me-2"><i class="bi bi-person-vcard"></i></a>
-										<a title="Editar" href="eventoA.php?id=<?php echo $eve['eve_id']; ?>" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
-										<a title="Eliminar" href="eventos.php?id=<?php echo $eve['eve_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $eve['eve_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
+										<a title="Gestionar asistencias" href="eveIndex.php?id=<?php echo $eve['eve_id']; ?>&action=eveAsa" class="btn btn-primary me-2"><i class="bi bi-person-vcard"></i></a>
+										<a title="Editar" href="eveIndex.php?id=<?php echo $eve['eve_id']; ?>&action=updateEvento" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
+										<a title="Eliminar" href="eveIndex.php?id=<?php echo $eve['eve_id']; ?>&action=deleteEvento" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $eve['eve_nombre']; ?>?')"><i class="bi bi-trash3"></i></a>
 									</div>
 								</td>
 							</tr>
