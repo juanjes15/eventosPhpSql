@@ -1,0 +1,38 @@
+CREATE DATABASE eventos;
+USE eventos;
+
+CREATE TABLE usuarios(
+    usu_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    usu_nombre varchar(50) NOT NULL,
+    usu_contrasena varchar(150) NOT NULL,
+    usu_correo varchar(100) NOT NULL
+);
+
+CREATE TABLE ubicacion(
+    ubi_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ubi_nombre varchar(100) NOT NULL,
+    ubi_direccion varchar(100) NOT NULL
+);
+
+CREATE TABLE asistente(
+    ase_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ase_nombre varchar(100) NOT NULL,
+    ase_apellido varchar(100) NOT NULL,
+    ase_correo varchar(50) NOT NULL
+);
+
+CREATE TABLE evento(
+    eve_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    eve_nombre varchar(100) NOT NULL,
+    eve_fecha date NOT NULL,
+    ubi_id int NOT NULL,
+    FOREIGN KEY (ubi_id) REFERENCES ubicacion(ubi_id)
+);
+
+CREATE TABLE asistencia(
+    asa_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    eve_id int NOT NULL,
+    ase_id int NOT NULL,
+    FOREIGN KEY (eve_id) REFERENCES evento(eve_id),
+    FOREIGN KEY (ase_id) REFERENCES asistente(ase_id)
+);
