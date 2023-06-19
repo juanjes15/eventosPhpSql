@@ -1,16 +1,16 @@
 <?php
-class Asistente
+class Model
 {
     private $db_connection;
 
     public function __construct()
     {
-        include 'database.php';
+        include '../database.php';
         $database = new Database();
         $this->db_connection = $database->getConnection();
     }
 
-    public function crearAsistente($nombre, $apellido, $correo)
+    public function createAsistente($nombre, $apellido, $correo)
     {
         $query = "INSERT INTO asistente (ase_nombre, ase_apellido, ase_correo) VALUES (:nombre, :apellido, :correo)";
         $stmt = $this->db_connection->prepare($query);
@@ -19,17 +19,13 @@ class Asistente
         $stmt->bindParam(":correo", $correo);
 
         if ($stmt->execute()) {
-            echo "<script>
-            if (window.confirm('Asistente creado exitosamente. ¿Desea volver a la página de asistentes?')) {
-                window.location.href = 'asistentes.php';
-            }
-            </script>";
+            return true;
         } else {
-            echo "<script>alert('Error al crear el asistente');</script>";
+            return false;
         }
     }
 
-    public function actualizarAsistente($id, $nombre, $apellido, $correo)
+    public function updateAsistente($id, $nombre, $apellido, $correo)
     {
         $query = "UPDATE asistente SET ase_nombre = :nombre, ase_apellido = :apellido, ase_correo = :correo WHERE ase_id = :id";
         $stmt = $this->db_connection->prepare($query);
@@ -39,17 +35,13 @@ class Asistente
         $stmt->bindParam(":correo", $correo);
 
         if ($stmt->execute()) {
-            echo "<script>
-            if (window.confirm('Asistente actualizado exitosamente. ¿Desea volver a la página de asistentes?')) {
-                window.location.href = 'asistentes.php';
-            }
-            </script>";
+            return true;
         } else {
-            echo "<script>alert('Error al actualizar el asistente');</script>";
+            return false;
         }
     }
 
-    public function eliminarAsistente($id)
+    public function deleteAsistente($id)
     {
         $query = "DELETE FROM asistente WHERE ase_id = :id";
         $stmt = $this->db_connection->prepare($query);
@@ -57,18 +49,18 @@ class Asistente
 
         if ($stmt->execute()) {
             if ($stmt->rowCount() > 0) {
-                echo "<script>alert('Asistente eliminado exitosamente');</script>";
+                return true;
             } else {
-                echo "<script>alert('No existe el asistente con el ID: " . $id . "');</script>";
+                return false;
             }
         } else {
-            echo "<script>alert('Error al eliminar el asistente');</script>";
+            return false;
         }
     }
 
-    public function obtenerAsistentes()
+    public function getAsistentes()
     {
-        $query = "SELECT asistente.ase_id, asistente.ase_nombre, asistente.ase_apellido, asistente.ase_correo FROM asistente";
+        $query = "SELECT * FROM asistente";
         $stmt = $this->db_connection->prepare($query);
         $stmt->execute();
         $asistentes = $stmt->fetchAll();
@@ -76,9 +68,9 @@ class Asistente
         return $asistentes;
     }
 
-    public function obtenerAsistente($id)
+    public function getAsistente($id)
     {
-        $query = "SELECT asistente.ase_nombre, asistente.ase_apellido, asistente.ase_correo FROM asistente WHERE asistente.ase_id = :id";
+        $query = "SELECT * FROM asistente WHERE asistente.ase_id = :id";
         $stmt = $this->db_connection->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->execute();

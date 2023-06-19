@@ -1,13 +1,3 @@
-<?php
-include 'asistente.php';
-$asistente = new Asistente();
-
-if (isset($_GET["id"])) {
-	$asistente->eliminarAsistente($_GET["id"]);
-}
-$asistentes = $asistente->obtenerAsistentes();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,10 +13,10 @@ $asistentes = $asistente->obtenerAsistentes();
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #0998ff8a;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php"><strong>Inicio</strong></a>
-			<a class="navbar-brand" href="eventos.php"><strong>Eventos</strong></a>
-			<a class="navbar-brand" href="ubicaciones.php"><strong>Ubicaciones</strong></a>
-			<a class="navbar-brand" href="asistentes.php"><strong>Asistentes</strong></a>
+			<a class="navbar-brand" href="../index.php"><strong>Inicio</strong></a>
+			<a class="navbar-brand" href="eveIndex.php"><strong>Eventos</strong></a>
+			<a class="navbar-brand" href="ubiIndex.php"><strong>Ubicaciones</strong></a>
+			<a class="navbar-brand" href="aseIndex.php"><strong>Asistentes</strong></a>
 		</div>
 	</nav><br>
 	<div class="container text-center p-2 rounded-5" style="background-color: #BFD4E4;">
@@ -37,7 +27,7 @@ $asistentes = $asistente->obtenerAsistentes();
 		</div>
 		<div class="row py-2">
 			<div class="col-4">
-				<a href="asistenteC.php" class="btn btn-success">Nuevo asistente</a>
+				<a href="aseIndex.php?action=createAsistente" class="btn btn-success">Nuevo asistente</a>
 			</div>
 		</div>
 		<div class="row justify-content-center py-3">
@@ -59,8 +49,8 @@ $asistentes = $asistente->obtenerAsistentes();
 								<td class="text-start"><?php echo $ase['ase_correo']; ?></td>
 								<td class="text-end">
 									<div class="d-flex justify-content-end">
-										<a title="Editar" href="asistenteA.php?id=<?php echo $ase['ase_id']; ?>" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
-										<a title="Eliminar" href="asistentes.php?id=<?php echo $ase['ase_id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ase['ase_nombre'] . ' ' . $ase['ase_apellido']; ?>?')"><i class="bi bi-trash3"></i></a>
+										<a title="Editar" href="aseIndex.php?id=<?php echo $ase['ase_id']; ?>&action=updateAsistente" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i></a>
+										<a title="Eliminar" href="aseIndex.php?id=<?php echo $ase['ase_id']; ?>&action=deleteAsistente" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar <?php echo $ase['ase_nombre'] . ' ' . $ase['ase_apellido']; ?>?')"><i class="bi bi-trash3"></i></a>
 									</div>
 								</td>
 							</tr>
