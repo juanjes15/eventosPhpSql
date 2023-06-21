@@ -1,5 +1,5 @@
 <?php
-include 'database.php';
+include 'config/database.php';
 $database = new Database();
 $db_connection = $database->getConnection();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
 	if ($stmt->execute()) {
 		echo "<script>alert('Usuario registrado exitosamente');</script>";
+		echo '<script>setTimeout(function() { window.location.href = "index.php"; }, 13);</script>';
 	} else {
 		echo "<script>alert('Error al registrar el usuario');</script>";
 	}
@@ -40,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 <body>
 	<div class="container">
 		<h4 class="h4">Registrarse</h4>
-		<form method="post">
+		<form method="POST">
 			<input class="form-control" type="text" name="name" placeholder="Nombre completo">
 			<input class="form-control" type="email" name="email" placeholder="Correo electrónico">
 			<input class="form-control" type="password" name="pass" placeholder="Contraseña">
 			<button class="btn btn-info" type="submit" name="submit"><strong>Enviar</strong></button>
-			<a href="login.php">Atrás</a>
+			<a href="index.php">Atrás</a>
 		</form>
 	</div>
 </body>

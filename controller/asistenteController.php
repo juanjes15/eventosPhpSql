@@ -13,7 +13,7 @@ class Controller
     public function index()
     {
         $asistentes = $this->model->getAsistentes();
-        include '../view/aseList.php';
+        include '../view/asistente/aseList.php';
     }
 
     public function createAsistente()
@@ -28,9 +28,9 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar el asistente.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/asistente/aseIndex.php"; }, 13);</script>';
         } else {
-            include '../view/aseCreate.php';
+            include '../view/asistente/aseCreate.php';
         }
     }
 
@@ -46,10 +46,10 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar el asistente.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/asistente/aseIndex.php"; }, 13);</script>';
         } else {
             $ase = $this->model->getAsistente($id);
-            include '../view/aseUpdate.php';
+            include '../view/asistente/aseUpdate.php';
         }
     }
 
@@ -61,6 +61,6 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar el asistente.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "../view/asistente/aseIndex.php"; }, 13);</script>';
     }
 }

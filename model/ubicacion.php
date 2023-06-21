@@ -5,7 +5,7 @@ class Model
 
     public function __construct()
     {
-        include '../database.php';
+        include '../config/database.php';
         $database = new Database();
         $this->db_connection = $database->getConnection();
     }

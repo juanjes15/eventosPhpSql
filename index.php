@@ -1,3 +1,48 @@
+<?php
+include 'config/database.php';
+$database = new Database();
+$db_connection = $database->getConnection();
+
+session_start(); // Iniciar sesión
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+	$email = $_POST["email"];
+	$password = $_POST["pass"];
+
+	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+	// Consultar el usuario en la base de datos
+	$query = "SELECT * FROM usuarios WHERE usu_correo = :correo";
+	$stmt = $db_connection->prepare($query);
+	$stmt->bindParam(":correo", $email);
+	$stmt->execute();
+
+	if ($stmt->rowCount() > 0) {
+		$row = $stmt->fetch();
+		$stored_password = $row['usu_contrasena'];
+
+		// Verificar la contraseña
+		if (password_verify($password, $stored_password)) {
+			// Inicio de sesión exitoso
+			$_SESSION['user_id'] = $row['usu_id'];
+			$_SESSION['user_name'] = $row['usu_nombre'];
+
+			// Redireccionar a la página de inicio o a otra página de tu elección
+			header("Location: view/index2.php");
+			exit;
+		} else {
+			// Contraseña incorrecta
+			echo "<script>alert('Contraseña incorrecta. Intenta nuevamente.');</script>";
+		}
+	} else {
+		// Usuario no encontrado
+		echo "<script>alert('El correo electrónico ingresado no está registrado.');</script>";
+		echo '<script>setTimeout(function() { window.location.href = "registrarse.php"; }, 13);</script>';
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,36 +50,20 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
 	<title>Sistema de Gestion de Asistencia a Eventos</title>
 </head>
 
-<body style="background-color: #F7FFE5;">
-	<nav class="navbar navbar-expand-lg" style="background-color: #A0C49D;">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php">SGAE</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="view/eveIndex.php">Eventos</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="view/ubiIndex.php">Ubicaciones</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="view/aseIndex.php">Asistentes</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav><br>
-	<div class="container text-center p-4" style="background-color: #E1ECC8;">
-		<h1 class="h1">Sistema de Gestión de<br>Asistencia a Eventos</h1>
-		<img src="img/bg.jpeg" class="img-fluid p-4 rounded-5" alt="...">
-		<h5 class="h5">Esta página busca hacer un control sobre la asistencia a distintos eventos de la ciudad de Manizales</h5>
+<body>
+	<div class="container">
+		<h4 class="h4">Iniciar sesión</h4>
+		<form method="POST">
+			<input class="form-control" type="email" name="email" placeholder="Correo electrónico">
+			<input class="form-control" type="password" name="pass" placeholder="Contraseña">
+			<button class="btn btn-info" type="submit" name="submit"><strong>Enviar</strong></button>
+			<a href="registrarse.php">Registrarse</a>
+		</form>
 	</div>
 </body>
 
