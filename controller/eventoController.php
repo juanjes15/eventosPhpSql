@@ -13,7 +13,7 @@ class Controller
     public function index()
     {
         $eventos = $this->model->getEventos();
-        include '../view/eveList.php';
+        include '../view/evento/eveList.php';
     }
 
     public function createEvento()
@@ -28,10 +28,10 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar el evento.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/evento/eveIndex.php"; }, 13);</script>';
         } else {
             $ubicaciones = $this->model->getUbicaciones();
-            include '../view/eveCreate.php';
+            include '../view/evento/eveCreate.php';
         }
     }
 
@@ -47,11 +47,11 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar el evento.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/evento/eveIndex.php"; }, 13);</script>';
         } else {
             $eve = $this->model->getEvento($id);
             $ubicaciones = $this->model->getUbicaciones();
-            include '../view/eveUpdate.php';
+            include '../view/evento/eveUpdate.php';
         }
     }
 
@@ -63,7 +63,7 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar el evento.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "../view/evento/eveIndex.php"; }, 13);</script>';
     }
 
     public function eveAsa($id)
@@ -71,7 +71,7 @@ class Controller
         $eve = $this->model->getEvento($id);
         $asistentes = $this->model->getAsistentes();
         $asistentesxe = $this->model->getAsistentesxE($id);
-        include '../view/eveAsa.php';
+        include '../view/evento/eveAsa.php';
     }
 
     public function createAsistencia($id)
@@ -83,7 +83,7 @@ class Controller
         } else {
             echo '<script>alert("Error al agregar la asistencia.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "../view/evento/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
     }
 
     public function deleteAsistencia($idA, $id)
@@ -94,6 +94,6 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar la asistencia.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "../view/evento/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
     }
 }

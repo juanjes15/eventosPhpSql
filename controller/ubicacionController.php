@@ -13,7 +13,7 @@ class Controller
     public function index()
     {
         $ubicaciones = $this->model->getUbicaciones();
-        include '../view/ubiList.php';
+        include '../view/ubicacion/ubiList.php';
     }
 
     public function createUbicacion()
@@ -27,9 +27,9 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar la ubicación.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/ubicacion/ubiIndex.php"; }, 13);</script>';
         } else {
-            include '../view/ubiCreate.php';
+            include '../view/ubicacion/ubiCreate.php';
         }
     }
 
@@ -44,10 +44,10 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar la ubicación.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "../view/ubicacion/ubiIndex.php"; }, 13);</script>';
         } else {
             $ubi = $this->model->getUbicacion($id);
-            include '../view/ubiUpdate.php';
+            include '../view/ubicacion/ubiUpdate.php';
         }
     }
 
@@ -59,6 +59,6 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar la ubicación.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "../view/ubicacion/ubiIndex.php"; }, 13);</script>';
     }
 }

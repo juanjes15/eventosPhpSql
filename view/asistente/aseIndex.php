@@ -1,5 +1,5 @@
 <?php
-require_once '../controller/asistenteController.php';
+require_once '../../controller/asistenteController.php';
 
 $controller = new Controller();
 
