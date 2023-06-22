@@ -68,6 +68,21 @@ class Model
         return $asistentes;
     }
 
+    public function getSearch($search)
+    {
+        $query = "SELECT * FROM asistente WHERE asistente.ase_nombre = :search OR asistente.ase_apellido = :search OR asistente.ase_correo = :search";
+        $stmt = $this->db_connection->prepare($query);
+        $stmt->bindParam(":search", $search);
+        $stmt->execute();
+        $asistentes = $stmt->fetchAll();
+
+        if (count($asistentes) > 0) {
+            return $asistentes;
+        } else {
+            return false;
+        }
+    }
+
     public function getAsistente($id)
     {
         $query = "SELECT * FROM asistente WHERE asistente.ase_id = :id";

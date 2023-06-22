@@ -63,4 +63,17 @@ class Controller
         }
         echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
     }
+
+    public function searchAsistente($search)
+    {
+        $result = $this->model->getSearch($search);
+        if ($result == false) {
+            echo '<script>alert("Asistente no encontrado.");</script>';
+            $asistentes = $this->model->getAsistentes();
+            include '../view/aseList.php';
+        } else {
+            $asistentes = $result;
+            include '../view/aseList.php';
+        }
+    }
 }
