@@ -61,4 +61,17 @@ class Controller
         }
         echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
     }
+
+    public function searchUbicacion($search)
+    {
+        $result = $this->model->getSearch($search);
+        if ($result == false) {
+            echo '<script>alert("Ubicación no encontrada.");</script>';
+            $ubicaciones = $this->model->getUbicaciones();
+            include '../view/ubiList.php';
+        } else {
+            $ubicaciones = $result;
+            include '../view/ubiList.php';
+        }
+    }
 }

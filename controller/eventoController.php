@@ -66,6 +66,19 @@ class Controller
         echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
     }
 
+    public function searchEvento($search)
+    {
+        $result = $this->model->getSearch($search);
+        if ($result == false) {
+            echo '<script>alert("Evento no encontrado.");</script>';
+            $eventos = $this->model->getEventos();
+            include '../view/eveList.php';
+        } else {
+            $eventos = $result;
+            include '../view/eveList.php';
+        }
+    }
+
     public function eveAsa($id)
     {
         $eve = $this->model->getEvento($id);

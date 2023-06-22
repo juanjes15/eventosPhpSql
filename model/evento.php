@@ -79,6 +79,21 @@ class Model
         return $eventos;
     }
 
+    public function getSearch($search)
+    {
+        $query = "SELECT * FROM evento INNER JOIN ubicacion ON evento.ubi_id = ubicacion.ubi_id WHERE evento.eve_nombre = :search OR ubicacion.ubi_nombre = :search";
+        $stmt = $this->db_connection->prepare($query);
+        $stmt->bindParam(":search", $search);
+        $stmt->execute();
+        $eventos = $stmt->fetchAll();
+
+        if (count($eventos) > 0) {
+            return $eventos;
+        } else {
+            return false;
+        }
+    }
+
     public function getUbicaciones()
     {
         $query = "SELECT ubicacion.ubi_id, ubicacion.ubi_nombre FROM ubicacion";

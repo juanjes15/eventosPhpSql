@@ -76,4 +76,19 @@ class Model
 
         return $ubicacion;
     }
+
+    public function getSearch($search)
+    {
+        $query = "SELECT * FROM ubicacion WHERE ubicacion.ubi_nombre = :search OR ubicacion.ubi_direccion = :search";
+        $stmt = $this->db_connection->prepare($query);
+        $stmt->bindParam(":search", $search);
+        $stmt->execute();
+        $ubicaciones = $stmt->fetchAll();
+
+        if (count($ubicaciones) > 0) {
+            return $ubicaciones;
+        } else {
+            return false;
+        }
+    }
 }

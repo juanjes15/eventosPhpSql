@@ -42,6 +42,19 @@
 			<div class="col-4">
 				<a href="eveIndex.php?action=createEvento" class="btn btn-success">Nuevo evento</a>
 			</div>
+			<div class="col-6">
+				<form action="eveIndex.php" method="GET" class="row align-items-center">
+					<div class="col-auto">
+						<label for="search" class="col-form-label">Buscar:</label>
+					</div>
+					<div class="col">
+						<input type="text" id="search" name="search" class="form-control">
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-info">Buscar</button>
+					</div>
+				</form>
+			</div>
 		</div>
 
 		<div class="row justify-content-center py-3">
