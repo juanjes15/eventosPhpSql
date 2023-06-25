@@ -1,5 +1,5 @@
 <?php
-require_once '../controller/ubicacionController.php';
+require_once '../../controller/asistenteController.php';
 
 $controller = new Controller();
 
@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
     $controller->$action();
 } elseif (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $controller->searchUbicacion($search);
+    $controller->searchAsistente($search);
 } else {
     $controller->index();
 }

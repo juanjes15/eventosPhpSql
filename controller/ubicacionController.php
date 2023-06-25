@@ -1,5 +1,8 @@
 <?php
-require_once '../model/ubicacion.php';
+
+$rutaCarpeta = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+$rutaProyecto = explode("/", $rutaCarpeta);
+require_once $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/model/ubicacion.php';
 
 class Controller
 {
@@ -13,7 +16,8 @@ class Controller
     public function index()
     {
         $ubicaciones = $this->model->getUbicaciones();
-        include '../view/ubiList.php';
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/ubicacion/ubiList.php';
     }
 
     public function createUbicacion()
@@ -27,9 +31,10 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar la ubicación.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "ubiIndex.php"; }, 13);</script>';
         } else {
-            include '../view/ubiCreate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/ubicacion/ubiCreate.php';
         }
     }
 
@@ -44,10 +49,11 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar la ubicación.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "ubiIndex.php"; }, 13);</script>';
         } else {
             $ubi = $this->model->getUbicacion($id);
-            include '../view/ubiUpdate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/ubicacion/ubiUpdate.php';
         }
     }
 
@@ -59,7 +65,7 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar la ubicación.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/ubiIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "ubiIndex.php"; }, 13);</script>';
     }
 
     public function searchUbicacion($search)
@@ -68,10 +74,10 @@ class Controller
         if ($result == false) {
             echo '<script>alert("Ubicación no encontrada.");</script>';
             $ubicaciones = $this->model->getUbicaciones();
-            include '../view/ubiList.php';
         } else {
             $ubicaciones = $result;
-            include '../view/ubiList.php';
         }
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/ubicacion/ubiList.php';
     }
 }

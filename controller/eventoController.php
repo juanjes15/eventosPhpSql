@@ -1,5 +1,8 @@
 <?php
-require_once '../model/evento.php';
+
+$rutaCarpeta = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+$rutaProyecto = explode("/", $rutaCarpeta);
+require_once $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/model/evento.php';
 
 class Controller
 {
@@ -13,7 +16,8 @@ class Controller
     public function index()
     {
         $eventos = $this->model->getEventos();
-        include '../view/eveList.php';
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/evento/eveList.php';
     }
 
     public function createEvento()
@@ -28,10 +32,11 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar el evento.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "eveIndex.php"; }, 13);</script>';
         } else {
             $ubicaciones = $this->model->getUbicaciones();
-            include '../view/eveCreate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/evento/eveCreate.php';
         }
     }
 
@@ -47,11 +52,12 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar el evento.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "eveIndex.php"; }, 13);</script>';
         } else {
             $eve = $this->model->getEvento($id);
             $ubicaciones = $this->model->getUbicaciones();
-            include '../view/eveUpdate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/evento/eveUpdate.php';
         }
     }
 
@@ -63,7 +69,7 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar el evento.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "eveIndex.php"; }, 13);</script>';
     }
 
     public function searchEvento($search)
@@ -72,11 +78,11 @@ class Controller
         if ($result == false) {
             echo '<script>alert("Evento no encontrado.");</script>';
             $eventos = $this->model->getEventos();
-            include '../view/eveList.php';
         } else {
             $eventos = $result;
-            include '../view/eveList.php';
         }
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/evento/eveList.php';
     }
 
     public function eveAsa($id)
@@ -84,7 +90,8 @@ class Controller
         $eve = $this->model->getEvento($id);
         $asistentes = $this->model->getAsistentes();
         $asistentesxe = $this->model->getAsistentesxE($id);
-        include '../view/eveAsa.php';
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/evento/eveAsa.php';
     }
 
     public function createAsistencia($id)
@@ -96,7 +103,7 @@ class Controller
         } else {
             echo '<script>alert("Error al agregar la asistencia.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
     }
 
     public function deleteAsistencia($idA, $id)
@@ -107,6 +114,6 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar la asistencia.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "eveIndex.php?id=' . $id . '&action=eveAsa"; }, 13);</script>';
     }
 }

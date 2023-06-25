@@ -5,7 +5,9 @@ class Model
 
     public function __construct()
     {
-        include '../database.php';
+        $rutaCarpeta = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $rutaProyecto = explode("/", $rutaCarpeta);
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/core/database.php';
         $database = new Database();
         $this->db_connection = $database->getConnection();
     }

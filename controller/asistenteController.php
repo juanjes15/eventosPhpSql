@@ -1,5 +1,8 @@
 <?php
-require_once '../model/asistente.php';
+
+$rutaCarpeta = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+$rutaProyecto = explode("/", $rutaCarpeta);
+require_once $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/model/asistente.php';
 
 class Controller
 {
@@ -13,7 +16,8 @@ class Controller
     public function index()
     {
         $asistentes = $this->model->getAsistentes();
-        include '../view/aseList.php';
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/asistente/aseList.php';
     }
 
     public function createAsistente()
@@ -28,9 +32,10 @@ class Controller
             } else {
                 echo '<script>alert("Error al agregar el asistente.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "aseIndex.php"; }, 13);</script>';
         } else {
-            include '../view/aseCreate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/asistente/aseCreate.php';
         }
     }
 
@@ -46,10 +51,11 @@ class Controller
             } else {
                 echo '<script>alert("Error al actualizar el asistente.");</script>';
             }
-            echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+            echo '<script>setTimeout(function() { window.location.href = "aseIndex.php"; }, 13);</script>';
         } else {
             $ase = $this->model->getAsistente($id);
-            include '../view/aseUpdate.php';
+            global $rutaProyecto;
+            include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/asistente/aseUpdate.php';
         }
     }
 
@@ -61,7 +67,7 @@ class Controller
         } else {
             echo '<script>alert("Error al eliminar el asistente.");</script>';
         }
-        echo '<script>setTimeout(function() { window.location.href = "../view/aseIndex.php"; }, 13);</script>';
+        echo '<script>setTimeout(function() { window.location.href = "aseIndex.php"; }, 13);</script>';
     }
 
     public function searchAsistente($search)
@@ -70,10 +76,10 @@ class Controller
         if ($result == false) {
             echo '<script>alert("Asistente no encontrado.");</script>';
             $asistentes = $this->model->getAsistentes();
-            include '../view/aseList.php';
         } else {
             $asistentes = $result;
-            include '../view/aseList.php';
         }
+        global $rutaProyecto;
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . $rutaProyecto[1] . '/view/asistente/aseList.php';
     }
 }

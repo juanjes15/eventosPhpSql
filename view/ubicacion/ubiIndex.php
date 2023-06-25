@@ -1,14 +1,9 @@
 <?php
-require_once '../controller/eventoController.php';
+require_once '../../controller/ubicacionController.php';
 
 $controller = new Controller();
 
-if (isset($_GET['idA'])) {
-    $idA = $_GET['idA'];
-    $id = $_GET['id'];
-    $action = $_GET['action'];
-    $controller->$action($idA, $id);
-} elseif (isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $action = $_GET['action'];
     $controller->$action($id);
@@ -17,7 +12,7 @@ if (isset($_GET['idA'])) {
     $controller->$action();
 } elseif (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $controller->searchEvento($search);
+    $controller->searchUbicacion($search);
 } else {
     $controller->index();
 }

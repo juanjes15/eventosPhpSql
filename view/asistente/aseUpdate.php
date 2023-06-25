@@ -12,17 +12,17 @@
 <body style="background-color: #F7FFE5;">
     <nav class="navbar navbar-expand-lg" style="background-color: #A0C49D;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.php">SGAE</a>
+            <a class="navbar-brand" href="../home.php">SGAE</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="eveIndex.php">Eventos</a>
+                        <a class="nav-link active" aria-current="page" href="../evento/eveIndex.php">Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="ubiIndex.php">Ubicaciones</a>
+                        <a class="nav-link active" aria-current="page" href="../ubicacion/ubiIndex.php">Ubicaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="aseIndex.php">Asistentes</a>
@@ -34,25 +34,33 @@
     <div class="container text-center p-4" style="background-color: #E1ECC8;">
         <div class="row py-3">
             <div class="col">
-                <h1 class="h2">Actualizar Ubicación</h1>
+                <h1 class="h2">Actualizar Asistente</h1>
             </div>
         </div>
         <div class="row py-3">
-            <form method="POST" action="ubiIndex.php?id=<?php echo $ubi['ubi_id'] ?>&action=updateUbicacion">
+            <form method="POST" action="aseIndex.php?id=<?php echo $ase['ase_id'] ?>&action=updateAsistente">
                 <div class="row justify-content-center py-2">
                     <div class="col-1">
                         <label for="nombre" class="col-form-label">Nombre:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $ubi['ubi_nombre']; ?>">
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $ase['ase_nombre']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
                     <div class="col-1">
-                        <label for="direccion" class="col-form-label">Dirección:</label>
+                        <label for="apellido" class="col-form-label">Apellido:</label>
                     </div>
                     <div class="col-4">
-                        <input type="text" id="direccion" name="direccion" class="form-control" value="<?php echo $ubi['ubi_direccion']; ?>">
+                        <input type="text" id="apellido" name="apellido" class="form-control" value="<?php echo $ase['ase_apellido']; ?>">
+                    </div>
+                </div>
+                <div class="row justify-content-center py-2">
+                    <div class="col-1">
+                        <label for="correo" class="col-form-label">Correo:</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" id="correo" name="correo" class="form-control" value="<?php echo $ase['ase_correo']; ?>">
                     </div>
                 </div>
                 <div class="row justify-content-center py-2">
